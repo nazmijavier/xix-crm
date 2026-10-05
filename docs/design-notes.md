@@ -60,3 +60,7 @@ The source's small targets and subdued workflow helper text need a separate acce
 ## Updated stage icons
 
 The latest table reference (`639:73154`) supplies the status icons used in group headings and stage badges. The 12 px negotiation, qualified, and closing SVGs are local assets; Discovery retains the source dashed-circle construction and Proposal reuses its original export. The deal briefcase uses the supplied 10 px export in its 16 px purple tile. Counts and stage assignments continue to follow saved deal data. Native disabled buttons prevent unavailable pages from opening by pointer or keyboard.
+
+## Updated outer corners
+
+The latest POST 1–4 source uses 0 px outer app corners. List (`639:74113`), Kanban (`639:72173`), and Workflow (`639:76025`) main surfaces use 0 px; the record-peek background (`639:101585`) and drawer (`639:102276`) retain 16 px. The sidebar uses 12 px, pipeline columns 24 px, deal cards 12 px, and workflow nodes 14 px. The standalone dashboard `658:39011` still has an 18 px outer frame; it is a separate, unavailable screen and does not override the POST app frames.

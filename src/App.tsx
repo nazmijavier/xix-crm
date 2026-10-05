@@ -234,7 +234,13 @@ export default function App() {
     </button>
   );
   return (
-    <div className={"app " + (collapsed ? "sidebar-is-collapsed" : "")}>
+    <div
+      className={
+        "app " +
+        (collapsed ? "sidebar-is-collapsed " : "") +
+        (record ? "record-is-open" : "")
+      }
+    >
       <Sidebar
         workspaceName={workspace}
         collapsed={collapsed}

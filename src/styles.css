@@ -151,7 +151,7 @@ input[type="checkbox"]:checked:after {
   height: 100dvh;
   padding: 4px 4px 4px 0;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0;
 }
 .main-surface {
   flex: 1;
@@ -159,11 +159,15 @@ input[type="checkbox"]:checked:after {
   display: flex;
   flex-direction: column;
   background: var(--surface);
-  border-radius: 16px;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
 }
+.record-is-open .main-surface {
+  border-radius: 16px;
+}
 .sidebar {
+  border-radius: 12px;
   width: 240px;
   flex: none;
   padding: 6px 10px;
