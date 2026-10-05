@@ -260,6 +260,7 @@ kbd {
   flex-direction: column;
 }
 .nav-item {
+  font-size: 13px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -331,8 +332,12 @@ kbd {
   align-items: center;
   padding: 2px 2px 2px 6px;
   border-radius: 8px;
+  background: #ffffff1a;
+  backdrop-filter: blur(24px);
+  box-shadow: inset 0 1px 1px #ffffff30, inset 0 -1px 1px #ffffff0a;
   flex: 1;
   font-size: 11px;
+  font-weight: 500;
   white-space: nowrap;
 }
 .trial .count {
@@ -344,7 +349,7 @@ kbd {
 }
 .upgrade {
   padding: 3px 6px;
-  background: #5059c4;
+  background: #666fdf;
   border-radius: 6px;
   line-height: 16px;
   letter-spacing: -0.11px;
