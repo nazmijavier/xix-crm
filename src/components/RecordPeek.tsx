@@ -56,12 +56,12 @@ export default function RecordPeek({
       <div className="peek-inner">
         <header className="peek-header">
           <button
-            className="icon-button"
+            className="icon-button peek-next"
             aria-label="Next deal"
             disabled={index === count - 1}
             onClick={() => onStep(1)}
           >
-            <Icon src={P("imgIconVector")} />
+            <Icon src={P("imgIconVector")} size={24} />
           </button>
           <button
             className="icon-button"
@@ -69,7 +69,7 @@ export default function RecordPeek({
             disabled={!index}
             onClick={() => onStep(-1)}
           >
-            <Icon src={P("imgIconVector1")} />
+            <Icon src={P("imgIconVector1")} size={16} />
           </button>
           <span>
             {index + 1} of {count}

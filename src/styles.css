@@ -1256,6 +1256,10 @@ kbd {
   width: 24px;
   height: 24px;
 }
+.peek-header > .icon-button.peek-next {
+  /* The exported 24 px asset already includes the button surface. */
+  background: transparent;
+}
 .peek-header > span {
   color: var(--muted);
   margin-left: 4px;
