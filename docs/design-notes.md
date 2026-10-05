@@ -59,7 +59,7 @@ The source's small targets and subdued workflow helper text need a separate acce
 
 ## Updated stage icons
 
-The latest table reference (`639:73154`) supplies the status icons used in group headings and stage badges. The 12 px negotiation, qualified, and closing SVGs are local assets; Discovery retains the source dashed-circle construction and Proposal reuses its original export. The deal briefcase uses the supplied 10 px export in its 16 px purple tile. Counts and stage assignments continue to follow saved deal data. Native disabled buttons prevent unavailable pages from opening by pointer or keyboard.
+The latest table reference (`639:73154`) supplies the status icons used in group headings and stage badges. The 12 px negotiation, qualified, and closing SVGs are local assets; Discovery retains the source dashed-circle construction and Proposal reuses its original export. The deal briefcase uses the supplied 10 px export in its 16 px purple tile. Counts and stage assignments continue to follow saved deal data. Unavailable sidebar entries use aria-disabled and have no activation handler. They keep their original appearance and show no modal, toast, or unavailable tooltip when clicked or activated with the keyboard.
 
 ## Updated outer corners
 

@@ -61,7 +61,7 @@ button {
     background-color 120ms ease,
     border-color 120ms ease;
 }
-button:active:not(:disabled) {
+button:active:not(:disabled):not([aria-disabled="true"]) {
   transform: scale(0.96);
 }
 a {
@@ -1814,7 +1814,7 @@ kbd {
 @media (hover: hover) {
   .button:not(.primary):not(.danger):hover,
   .toolbar-button:hover,
-  .nav-item:not(:disabled):hover,
+  .nav-item:not(:disabled):not([aria-disabled="true"]):hover,
   .search-button:hover,
   .icon-button:hover,
   .menu-item:hover,
@@ -2123,6 +2123,7 @@ body {
 .stage-badge.pink {
   color: #f476ee;
 }
-.sidebar button:disabled {
-  cursor: not-allowed;
+.sidebar button[aria-disabled="true"] {
+  opacity: 1;
+  cursor: default;
 }

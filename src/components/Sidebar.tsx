@@ -42,13 +42,11 @@ export default function Sidebar({
       <button
         key={label}
         aria-label={label}
-        disabled={label !== "Deals" && label !== "Workflows"}
+        aria-disabled={label !== "Deals" && label !== "Workflows"}
         title={
-          label !== "Deals" && label !== "Workflows"
-            ? `${label} — Not available yet`
-            : collapsed
-              ? label
-              : undefined
+          collapsed && (label === "Deals" || label === "Workflows")
+            ? label
+            : undefined
         }
         className={
           "nav-item " +
@@ -56,12 +54,12 @@ export default function Sidebar({
             ? "selected"
             : "")
         }
-        onClick={() =>
+        onClick={
           label === "Deals"
-            ? onNavigate("list")
+            ? () => onNavigate("list")
             : label === "Workflows"
-              ? onNavigate("workflow")
-              : onPanel(label)
+              ? () => onNavigate("workflow")
+              : undefined
         }
       >
         <span
@@ -119,8 +117,7 @@ export default function Sidebar({
             </button>
             <button
               className="notification"
-              disabled
-              title="Notifications — Not available yet"
+              aria-disabled="true"
               aria-label="Notifications"
             >
               <Icon src={A("imgBell")} />
@@ -132,8 +129,7 @@ export default function Sidebar({
           {collapsed && (
             <button
               className="nav-item"
-              disabled
-              title="Notifications — Not available yet"
+              aria-disabled="true"
               aria-label="Notifications"
             >
               <Icon src={A("imgBell")} />
@@ -166,9 +162,8 @@ export default function Sidebar({
       <div className="sidebar-bottom">
         <button
           className="nav-item"
-          disabled
+          aria-disabled="true"
           aria-label="Invite teammates"
-          title="Invite teammates — Not available yet"
         >
           <Icon src={A("imgUserPlus")} />
           {!collapsed && <span>Invite teammates</span>}
@@ -184,11 +179,7 @@ export default function Sidebar({
         </button>
         <div className="trial-row">
           {!collapsed && (
-            <button
-              className="trial"
-              disabled
-              title="Upgrade to Pro — Not available yet"
-            >
+            <button className="trial" aria-disabled="true">
               <span className="count">12</span>
               <span>days left</span>
               <span className="upgrade">Upgrade to Pro</span>

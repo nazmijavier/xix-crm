@@ -77,7 +77,7 @@ React 19 · TypeScript · Vite · Plain CSS · Inter · [Meya Icons](https://git
 This is a **frontend starter**, not a hosted CRM service. It includes fictional pipeline values and sample people/company labels from the design. These do not represent real business relationships or financial records.
 
 - Data is local to one browser. Sharing a URL does not share local edits.
-- Authentication, team collaboration, email delivery, billing, AI, enrichment, and Slack are not connected. Unavailable navigation destinations are disabled. Deals, Workflows, search, and local workspace settings remain available.
+- Authentication, team collaboration, email delivery, billing, AI, enrichment, and Slack are not connected. Unavailable navigation destinations keep their original appearance but do nothing when activated. Deals, Workflows, search, and local workspace settings remain available.
 - The workflow is a fixed connected template with editable names and a local simulation. Arbitrary node creation/deletion and an automation execution backend are not included.
 - The trial/Pro labels and sidebar totals are retained from the Figma composition. The demo never expires or charges money.
 - Record details, probability bars, totals, and pagination use actual demo data, resolving inconsistent sample values in the source frames.
