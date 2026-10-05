@@ -281,7 +281,7 @@ export function DealsBoard({
                       <span>{d.age}d in stage</span>
                     </span>
                     <span className="card-row">
-                      <Avatar name={d.owner} full />
+                      <Avatar name={d.owner} />
                       {d.owner.split(" ")[0]}
                     </span>
                     <span className="card-row card-badges">
