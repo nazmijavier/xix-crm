@@ -573,7 +573,8 @@ kbd {
   gap: 4px;
   width: 100%;
   background: #ffffff1a;
-  padding: 0 0 0 8px;
+  padding: 0 8px 0 6px;
+  border-radius: 8px;
   font-size: 11px;
   text-align: left;
 }
@@ -842,6 +843,8 @@ kbd {
   position: relative;
 }
 .stage-symbol.discovery {
+  color: #6fb1ed;
+  flex: none;
   border-style: dashed;
 }
 .stage-symbol.proposal:after {
@@ -1818,7 +1821,7 @@ kbd {
 @media (hover: hover) {
   .button:not(.primary):not(.danger):hover,
   .toolbar-button:hover,
-  .nav-item:hover,
+  .nav-item:not(:disabled):hover,
   .search-button:hover,
   .icon-button:hover,
   .menu-item:hover,
@@ -2116,4 +2119,17 @@ body {
 }
 .column-heading .badge.pink {
   color: #f476ee;
+}
+
+.stage-badge {
+  padding-inline: 6px;
+}
+.stage-badge.green {
+  color: #a0efc0;
+}
+.stage-badge.pink {
+  color: #f476ee;
+}
+.sidebar button:disabled {
+  cursor: not-allowed;
 }

@@ -28,7 +28,12 @@ export function Badge({
   stage?: Stage;
 }) {
   return (
-    <span className={"badge " + (stage ? stageColors[stage] : color)}>
+    <span
+      className={
+        "badge " + (stage ? "stage-badge " + stageColors[stage] : color)
+      }
+    >
+      {stage && <StageIcon stage={stage} />}
       {children}
     </span>
   );
@@ -179,9 +184,9 @@ export function Empty({
 
 export function StageIcon({ stage }: { stage: Stage }) {
   const icons: Partial<Record<Stage, string>> = {
-    Negotiation: asset("639-72569", "imgFrame2147236535"),
-    Qualified: asset("639-72294", "imgFrame2147236535"),
-    Closing: asset("639-72636", "imgFrame2147236536"),
+    Negotiation: "/assets/stage-negotiation.svg",
+    Qualified: "/assets/stage-qualified.svg",
+    Closing: "/assets/stage-closing.svg",
     Proposal: "/assets/proposal-status.svg",
   };
   return icons[stage] ? (

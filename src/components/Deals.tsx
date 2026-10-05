@@ -3,7 +3,6 @@ import type { Deal, Stage } from "../model";
 import {
   stages,
   boardStages,
-  stageColors,
   total,
   money,
   shortMoney,
@@ -90,14 +89,14 @@ export function DealsList({
                   )
                 }
               >
-                <span
-                  className={
-                    "group-dot " + (stageColors[group as Stage] || "gray")
-                  }
-                >
-                  {folded.includes(group) ? "›" : "•"}
-                </span>
-                <span>{group}</span>
+                {groupBy === "Stage" ? (
+                  <StageIcon stage={group as Stage} />
+                ) : (
+                  <span className="group-dot" aria-hidden="true">
+                    {folded.includes(group) ? "›" : "•"}
+                  </span>
+                )}
+                <span>{group === "Negotiation" ? "Nego" : group}</span>
                 <span className="count">{rows.length}</span>
                 <span className="group-total">{shortMoney(total(rows))}</span>
               </button>
@@ -133,10 +132,7 @@ export function DealsList({
                           <CompanyLogo company={d.company} />
                         ) : (
                           <span className="deal-glyph">
-                            <Icon
-                              src={asset("639-74191", "imgFrame1")}
-                              size={10}
-                            />
+                            <Icon src="/assets/deal-briefcase.svg" size={10} />
                           </span>
                         )}
                         <span>{d.name}</span>
@@ -149,7 +145,9 @@ export function DealsList({
                       </button>
                     </div>
                     <div role="cell">
-                      <Badge stage={d.stage}>{d.stage}</Badge>
+                      <Badge stage={d.stage}>
+                        {d.stage === "Negotiation" ? "Nego" : d.stage}
+                      </Badge>
                     </div>
                     <div role="cell">
                       <Badge color={d.color}>{d.industry}</Badge>
@@ -239,7 +237,6 @@ export function DealsBoard({
               <header className="column-heading">
                 <div>
                   <Badge stage={stage}>
-                    <StageIcon stage={stage} />
                     {stage === "Negotiation" ? "Nego" : stage}
                   </Badge>
                   <span className="count">{rows.length}</span>

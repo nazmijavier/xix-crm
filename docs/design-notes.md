@@ -45,7 +45,7 @@ The two requested skills, **better-ui** and **emil-design-eng**, informed radius
 - Selection supports bulk move/delete. Delete requires confirmation. A recent mutation can be undone from the notification.
 - JSON import validates records and merges by unique ID. CSV export escapes fields and guards formula prefixes.
 - Workflow nodes can be selected and renamed; background drag pans, controls zoom and reset the view. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
-- Share copies a URL, not local data. Invite/email/AI/billing controls explain their demo boundaries.
+- Share copies a URL, not local data. Unavailable sidebar pages, notifications, invitations, and the Pro entry are disabled. The compact sidebar includes a working Deals entry for returning from Workflows. AI controls explain their demo boundaries.
 
 ## Verification
 
@@ -56,3 +56,7 @@ The two requested skills, **better-ui** and **emil-design-eng**, informed radius
 - Not verified: physical iOS/Android devices, all browser engines, a full screen-reader audit, full WCAG contrast compliance, or the browser Animations panel at 10% speed. High-frequency controls are intentionally immediate.
 
 The source's small targets and subdued workflow helper text need a separate accessibility pass if strict WCAG AA certification is a release requirement. That pass may require visible changes to the supplied design.
+
+## Updated stage icons
+
+The latest table reference (`639:73154`) supplies the status icons used in group headings and stage badges. The 12 px negotiation, qualified, and closing SVGs are local assets; Discovery retains the source dashed-circle construction and Proposal reuses its original export. The deal briefcase uses the supplied 10 px export in its 16 px purple tile. Counts and stage assignments continue to follow saved deal data. Native disabled buttons prevent unavailable pages from opening by pointer or keyboard.

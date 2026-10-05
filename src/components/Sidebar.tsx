@@ -42,7 +42,14 @@ export default function Sidebar({
       <button
         key={label}
         aria-label={label}
-        title={collapsed ? label : undefined}
+        disabled={label !== "Deals" && label !== "Workflows"}
+        title={
+          label !== "Deals" && label !== "Workflows"
+            ? `${label} — Not available yet`
+            : collapsed
+              ? label
+              : undefined
+        }
         className={
           "nav-item " +
           ((workflow ? label === "Workflows" : label === "Deals")
@@ -50,7 +57,7 @@ export default function Sidebar({
             : "")
         }
         onClick={() =>
-          label === "Deals" || (label === "Home" && workflow)
+          label === "Deals"
             ? onNavigate("list")
             : label === "Workflows"
               ? onNavigate("workflow")
@@ -112,7 +119,8 @@ export default function Sidebar({
             </button>
             <button
               className="notification"
-              onClick={() => onPanel("Notifications")}
+              disabled
+              title="Notifications — Not available yet"
               aria-label="Notifications"
             >
               <Icon src={A("imgBell")} />
@@ -124,12 +132,14 @@ export default function Sidebar({
           {collapsed && (
             <button
               className="nav-item"
-              onClick={() => onPanel("Notifications")}
-              title="Notifications"
+              disabled
+              title="Notifications — Not available yet"
+              aria-label="Notifications"
             >
               <Icon src={A("imgBell")} />
             </button>
           )}
+          {collapsed && nav(crm.slice(0, 1))}
           {nav(primary.slice(1))}
         </nav>
         {!collapsed && (
@@ -156,9 +166,9 @@ export default function Sidebar({
       <div className="sidebar-bottom">
         <button
           className="nav-item"
-          onClick={() => onPanel("Invite teammates")}
+          disabled
           aria-label="Invite teammates"
-          title={collapsed ? "Invite teammates" : undefined}
+          title="Invite teammates — Not available yet"
         >
           <Icon src={A("imgUserPlus")} />
           {!collapsed && <span>Invite teammates</span>}
@@ -174,7 +184,11 @@ export default function Sidebar({
         </button>
         <div className="trial-row">
           {!collapsed && (
-            <button className="trial" onClick={() => onPanel("Plans")}>
+            <button
+              className="trial"
+              disabled
+              title="Upgrade to Pro — Not available yet"
+            >
               <span className="count">12</span>
               <span>days left</span>
               <span className="upgrade">Upgrade to Pro</span>
