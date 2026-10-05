@@ -33,7 +33,7 @@ const T = (n: string) => asset("639-74143", n);
 function readRoute() {
   return location.pathname.startsWith("/workflows")
     ? "workflow"
-    : location.pathname.includes("/board")
+    : location.pathname === "/" || location.pathname.includes("/board")
       ? "board"
       : "list";
 }

@@ -56,7 +56,7 @@ export default function Sidebar({
         }
         onClick={
           label === "Deals"
-            ? () => onNavigate("list")
+            ? () => onNavigate("board")
             : label === "Workflows"
               ? () => onNavigate("workflow")
               : undefined
