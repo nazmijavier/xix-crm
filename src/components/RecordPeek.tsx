@@ -125,18 +125,24 @@ export default function RecordPeek({
             {property(
               "Stage",
               "imgFrame2",
-              <select
-                className={"stage-select " + deal.stage.toLowerCase()}
-                aria-label="Deal stage"
-                value={deal.stage}
-                onChange={(e) =>
-                  onUpdate({ ...deal, stage: e.target.value as Stage, age: 0 })
-                }
-              >
-                {stages.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>,
+              <Badge stage={deal.stage}>
+                <select
+                  className="stage-select"
+                  aria-label="Deal stage"
+                  value={deal.stage}
+                  onChange={(e) =>
+                    onUpdate({
+                      ...deal,
+                      stage: e.target.value as Stage,
+                      age: 0,
+                    })
+                  }
+                >
+                  {stages.map((s) => (
+                    <option key={s}>{s}</option>
+                  ))}
+                </select>
+              </Badge>,
             )}
             {property(
               "Probability",

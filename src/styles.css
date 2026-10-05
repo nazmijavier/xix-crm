@@ -1329,29 +1329,14 @@ kbd {
 .stage-select {
   appearance: none;
   border: 0;
-  background: #7f5ff140;
-  color: #b7a3ff;
-  border-radius: 100px;
-  padding: 2px 7px;
-  line-height: 14px;
+  background: transparent;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0;
+  line-height: 12px;
+  font-weight: inherit;
   cursor: pointer;
   max-width: 100%;
-}
-.stage-select.discovery {
-  color: #6fb1ed;
-  background: #1d93ff40;
-}
-.stage-select.qualified {
-  color: #3ded96;
-  background: #3dd68740;
-}
-.stage-select.negotiation {
-  color: #3dd4d1;
-  background: #3dd4d140;
-}
-.stage-select.closing {
-  color: #ff76fa;
-  background: #e040d933;
 }
 .stage-select option {
   background: #343438;
