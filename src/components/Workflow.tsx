@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import {
+  canvasViewport,
+  centerCanvas,
+  minimapProjection,
   connections,
   connectionPath,
   dragPosition,
@@ -141,6 +144,29 @@ export default function Workflow({
     }
   }, [nodes]);
   const canvas = useRef<HTMLDivElement>(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    const element = canvas.current;
+    if (!element) return;
+    const update = () =>
+      setCanvasSize({
+        width: element.clientWidth,
+        height: element.clientHeight,
+      });
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  const mapDrag = useRef<{
+    pointerId: number;
+    x: number;
+    y: number;
+    pos: { x: number; y: number };
+    factorX: number;
+    factorY: number;
+  } | null>(null);
+  const [movingMap, setMovingMap] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [selected, setSelected] = useState("enterprise");
@@ -177,10 +203,8 @@ export default function Workflow({
     right: Math.max(...nodes.map((n) => n.x + (n.width || 220))),
     bottom: Math.max(...nodes.map((n) => n.y + nodeHeight(n))),
   };
-  const mapScale = Math.min(
-    154 / (bounds.right - bounds.left),
-    64 / (bounds.bottom - bounds.top),
-  );
+  const map = minimapProjection(nodes);
+  const viewport = canvasViewport(pos, zoom, canvasSize);
   const fitToView = () => {
     if (!canvas.current) return;
     const { clientWidth: width, clientHeight: height } = canvas.current;
@@ -536,22 +560,116 @@ export default function Workflow({
         {showMap && (
           <button
             className="minimap"
-            aria-label="Fit workflow to view"
-            onClick={fitToView}
+            aria-label="Workflow minimap. Click to navigate, drag the viewport to pan, or use arrow keys."
+            title="Click to navigate · Drag to pan"
+            data-dragging={movingMap || undefined}
+            onPointerDown={(e) => {
+              if (e.button !== 0 || mapDrag.current) return;
+              e.preventDefault();
+              e.currentTarget.focus();
+              e.currentTarget.setPointerCapture(e.pointerId);
+              const rect = e.currentTarget.getBoundingClientRect();
+              const factorX = 155 / e.currentTarget.clientWidth;
+              const factorY = 78 / e.currentTarget.clientHeight;
+              const inViewport = (e.target as HTMLElement).classList.contains(
+                "minimap-viewport",
+              );
+              const next = inViewport
+                ? pos
+                : centerCanvas(
+                    {
+                      x:
+                        ((e.clientX - rect.left - e.currentTarget.clientLeft) *
+                          factorX -
+                          map.x) /
+                        map.scale,
+                      y:
+                        ((e.clientY - rect.top - e.currentTarget.clientTop) *
+                          factorY -
+                          map.y) /
+                        map.scale,
+                    },
+                    zoom,
+                    canvasSize,
+                  );
+              setPos(next);
+              mapDrag.current = {
+                pointerId: e.pointerId,
+                x: e.clientX,
+                y: e.clientY,
+                pos: next,
+                factorX,
+                factorY,
+              };
+              setMovingMap(true);
+            }}
+            onPointerMove={(e) => {
+              const current = mapDrag.current;
+              if (!current || current.pointerId !== e.pointerId) return;
+              setPos({
+                x:
+                  current.pos.x -
+                  (((e.clientX - current.x) * current.factorX) / map.scale) *
+                    zoom,
+                y:
+                  current.pos.y -
+                  (((e.clientY - current.y) * current.factorY) / map.scale) *
+                    zoom,
+              });
+            }}
+            onPointerUp={(e) => {
+              if (mapDrag.current?.pointerId !== e.pointerId) return;
+              mapDrag.current = null;
+              setMovingMap(false);
+            }}
+            onPointerCancel={() => {
+              mapDrag.current = null;
+              setMovingMap(false);
+            }}
+            onLostPointerCapture={() => {
+              mapDrag.current = null;
+              setMovingMap(false);
+            }}
+            onKeyDown={(e) => {
+              const direction = {
+                ArrowLeft: [-1, 0],
+                ArrowRight: [1, 0],
+                ArrowUp: [0, -1],
+                ArrowDown: [0, 1],
+              }[e.key];
+              if (direction) {
+                e.preventDefault();
+                setPos((p) => ({
+                  x: p.x - direction[0] * 80,
+                  y: p.y - direction[1] * 80,
+                }));
+              } else if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fitToView();
+              }
+            }}
           >
             {nodes.map((n) => (
               <span
                 key={n.id}
                 style={{
-                  left: (n.x - bounds.left) * mapScale + 8,
-                  top: (n.y - bounds.top) * mapScale + 8,
-                  width: (n.width || 220) * mapScale,
-                  height: nodeHeight(n) * mapScale,
+                  left: `${((n.x * map.scale + map.x) / 155) * 100}%`,
+                  top: `${((n.y * map.scale + map.y) / 78) * 100}%`,
+                  width: `${(((n.width || 220) * map.scale) / 155) * 100}%`,
+                  height: `${((nodeHeight(n) * map.scale) / 78) * 100}%`,
                   background: n.id === selected ? "#8c95ff" : undefined,
                 }}
               />
             ))}
-            <i />
+            <i
+              className="minimap-viewport"
+              style={{
+                left: `${((viewport.x * map.scale + map.x) / 155) * 100}%`,
+                top: `${((viewport.y * map.scale + map.y) / 78) * 100}%`,
+                width: `${((viewport.width * map.scale) / 155) * 100}%`,
+                height: `${((viewport.height * map.scale) / 78) * 100}%`,
+              }}
+            />
           </button>
         )}
         <div className="zoom-controls">

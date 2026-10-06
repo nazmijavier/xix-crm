@@ -11,7 +11,7 @@ A dark, glass-styled CRM interface by **Meya Lab**, built from the Xix Figma des
 - **[Deals list](https://xix-crm.nazmijavier7.workers.dev/deals)** — grouped records, search, filters, sorting, selection, and bulk stage changes.
 - **[Kanban board](https://xix-crm.nazmijavier7.workers.dev/deals/board)** — horizontally scrollable pipeline with independent column scrolling and desktop drag-and-drop.
 - **[Record peek](https://xix-crm.nazmijavier7.workers.dev/deals?record=openai)** — record navigation, editable fields, stage selection, notes, and a full record view.
-- **[Workflow template](https://xix-crm.nazmijavier7.workers.dev/workflows)** — freely draggable cards with live connectors, saved positions, keyboard movement, pan, zoom, minimap, node naming, local draft/live state, and a sample routing simulation.
+- **[Workflow template](https://xix-crm.nazmijavier7.workers.dev/workflows)** — freely draggable cards with live connectors, saved positions, keyboard movement, pan, zoom, interactive minimap navigation, node naming, local draft/live state, and a sample routing simulation.
 
 Create, edit, and delete deals; undo your last change; import/export JSON; export filtered data as CSV. Changes are stored locally in your browser. No account or API key is needed.
 

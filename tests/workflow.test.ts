@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  canvasViewport,
+  centerCanvas,
+  minimapProjection,
   connectionPath,
   connections,
   dragPosition,
@@ -67,4 +70,38 @@ test("restore saves only valid positions while preserving node content and untou
   assert.deepEqual(restorePositions(defaults, "invalid JSON"), defaults);
   assert.deepEqual(restorePositions(defaults, null), defaults);
   assert.equal(defaults[0].x, 1);
+});
+
+test("minimap viewport tracks canvas pan and zoom; clicking a map point centers it", () => {
+  const size = { width: 1200, height: 800 };
+  for (const zoom of [0.4, 1, 1.8]) {
+    const target = { x: -320, y: 640 };
+    const pos = centerCanvas(target, zoom, size);
+    const rect = canvasViewport(pos, zoom, size);
+    assert.ok(Math.abs(rect.x + rect.width / 2 - target.x) < 1e-8);
+    assert.ok(Math.abs(rect.y + rect.height / 2 - target.y) < 1e-8);
+    const panned = canvasViewport(
+      { x: pos.x - 100, y: pos.y + 50 },
+      zoom,
+      size,
+    );
+    assert.ok(Math.abs((panned.x - rect.x) * zoom - 100) < 1e-8);
+    assert.ok(Math.abs((panned.y - rect.y) * zoom + 50) < 1e-8);
+  }
+});
+
+test("minimap keeps moved cards within its padded bounds and allows round-trip coordinates", () => {
+  const nodes = [
+    { id: "a", x: -800, y: -250 },
+    { id: "branch", x: 2000, y: 1500, width: 190 },
+  ];
+  const map = minimapProjection(nodes);
+  for (const n of nodes) {
+    const x = n.x * map.scale + map.x;
+    const y = n.y * map.scale + map.y;
+    assert.ok(x >= 6 && x < 149);
+    assert.ok(y >= 6 && y < 72);
+    assert.ok(Math.abs((x - map.x) / map.scale - n.x) < 1e-8);
+    assert.ok(Math.abs((y - map.y) / map.scale - n.y) < 1e-8);
+  }
 });

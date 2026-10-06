@@ -1747,21 +1747,29 @@ kbd {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: crosshair;
+}
+.minimap:active {
+  transform: none;
 }
 .minimap span {
   position: absolute;
   background: #ffffff26;
   border-radius: 2px;
+  pointer-events: none;
 }
-.minimap i {
+.minimap-viewport {
   position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 134px;
-  height: 62px;
-  border: 1.5px solid #666fdf8c;
+  border: 1.5px solid #8c95ff;
   border-radius: 5px;
   background: #666fdf12;
+  cursor: grab;
+}
+.minimap[data-dragging],
+.minimap[data-dragging] .minimap-viewport {
+  cursor: grabbing;
 }
 .zoom-controls {
   height: 28px;

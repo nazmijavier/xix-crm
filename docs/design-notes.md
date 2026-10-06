@@ -44,7 +44,7 @@ The two requested skills, **better-ui** and **emil-design-eng**, informed radius
 - Search matches deal, company, industry, or owner. Owner/stage filters combine; sort applies within groups.
 - Selection supports bulk move/delete. Delete requires confirmation. A recent mutation can be undone from the notification.
 - JSON import validates records and merges by unique ID. CSV export escapes fields and guards formula prefixes.
-- Workflow nodes can be selected, renamed, and dragged freely at any zoom. Arrow keys move a focused card by 10 px (Shift: 1 px). Positions persist in this browser; connectors, selection tools, and minimap follow the cards. Background drag pans; fit-to-screen includes the current card positions. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
+- Workflow nodes can be selected, renamed, and dragged freely at any zoom. Arrow keys move a focused card by 10 px (Shift: 1 px). Positions persist in this browser; connectors, selection tools, and minimap follow the cards. Background drag pans; fit-to-screen includes the current card positions. The minimap shows the real viewport, follows pan/zoom and card movement, supports dragging the viewport, and centers the canvas when clicking outside it. Focused minimap arrow keys pan; Enter fits the graph. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
 - Share copies a URL, not local data. Unavailable sidebar pages, notifications, invitations, and the Pro entry are disabled. The compact sidebar includes a working Deals entry for returning from Workflows. AI controls explain their demo boundaries.
 
 ## Verification

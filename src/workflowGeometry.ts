@@ -66,3 +66,38 @@ export function restorePositions<T extends WorkflowNode>(
     return defaults;
   }
 }
+
+export type CanvasSize = { width: number; height: number };
+
+export function canvasViewport(pos: Point, zoom: number, size: CanvasSize) {
+  return {
+    x: -pos.x / zoom,
+    y: (48 - pos.y) / zoom,
+    width: size.width / zoom,
+    height: size.height / zoom,
+  };
+}
+
+export function centerCanvas(
+  point: Point,
+  zoom: number,
+  size: CanvasSize,
+): Point {
+  return {
+    x: size.width / 2 - point.x * zoom,
+    y: 48 + size.height / 2 - point.y * zoom,
+  };
+}
+
+export function minimapProjection(nodes: WorkflowNode[]) {
+  const left = Math.min(...nodes.map((n) => n.x)) - 80;
+  const top = Math.min(...nodes.map((n) => n.y)) - 80;
+  const right = Math.max(...nodes.map((n) => n.x + (n.width || 220))) + 80;
+  const bottom = Math.max(...nodes.map((n) => n.y + nodeHeight(n))) + 80;
+  const scale = Math.min(143 / (right - left), 66 / (bottom - top));
+  return {
+    scale,
+    x: (155 - (right - left) * scale) / 2 - left * scale,
+    y: (78 - (bottom - top) * scale) / 2 - top * scale,
+  };
+}
