@@ -40,7 +40,7 @@ function readRoute() {
 export default function App() {
   const [deals, setDeals] = useState(loadDeals);
   const [view, setView] = useState(readRoute);
-  const [collapsed, setCollapsed] = useState(readRoute() === "workflow");
+  const [collapsed, setCollapsed] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     query: "",
     stage: "",
@@ -84,7 +84,6 @@ export default function App() {
     const pop = () => {
       setView(readRoute());
       setRecordId(new URLSearchParams(location.search).get("record") || "");
-      setCollapsed(readRoute() === "workflow");
     };
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
@@ -110,7 +109,6 @@ export default function App() {
   }, [menu]);
   const navigate = (v: string) => {
     setView(v);
-    setCollapsed(v === "workflow");
     setRecordId("");
     setFullRecord(false);
     setMenu("");

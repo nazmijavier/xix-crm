@@ -11,7 +11,7 @@ The Develop section (`650:39011`) contains four app frames, each 1440 × 955. Th
 | Record peek    | `639:101583` | `/deals?record=openai` |
 | Workflow       | `639:75959`  | `/workflows`           |
 
-The main surface starts at x=240, y=4 and measures 1196 × 947 on desktop. The workflow uses a 56 px compact sidebar. Typography is Inter; the screen uses the original 12 px labels, 14 px card titles, 20 px Deals title, and source badge palettes.
+The main surface starts at x=240, y=4 and measures 1196 × 947 on desktop. Workflow uses the same 240 px expanded sidebar as Deals; manual collapse is preserved across navigation. Typography is Inter; the screen uses the original 12 px labels, 14 px card titles, 20 px Deals title, and source badge palettes.
 
 Board columns are 266.4 px wide with 8 px gaps, 24 px corner radii, and 12 px internal padding. Cards have 12 px radii and 184 px height. Discovery and Closing use the source's 12 px card gap; the other columns use 8 px. The list has a 48 px header, 40 px toolbar, 34 px column heading, 30 px group headings, and 44 px rows.
 
@@ -44,7 +44,7 @@ The two requested skills, **better-ui** and **emil-design-eng**, informed radius
 - Search matches deal, company, industry, or owner. Owner/stage filters combine; sort applies within groups.
 - Selection supports bulk move/delete. Delete requires confirmation. A recent mutation can be undone from the notification.
 - JSON import validates records and merges by unique ID. CSV export escapes fields and guards formula prefixes.
-- Workflow nodes can be selected, renamed, and dragged freely at any zoom. Arrow keys move a focused card by 10 px (Shift: 1 px). Positions persist in this browser; connectors, selection tools, and minimap follow the cards. Background drag pans; fit-to-screen includes the current card positions. The minimap shows the real viewport, follows pan/zoom and card movement, supports dragging the viewport, and centers the canvas when clicking outside it. Focused minimap arrow keys pan; Enter fits the graph. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
+- Workflow nodes can be selected, renamed, and dragged freely at any zoom. Arrow keys move a focused card by 10 px (Shift: 1 px). Positions persist in this browser; connectors, selection tools, and minimap follow the cards. Background drag pans; fit-to-screen includes the current card positions. The minimap shows the real viewport, follows pan/zoom and card movement, supports dragging the viewport, and centers the canvas when clicking outside it. Focused minimap arrow keys pan; Enter fits the graph. Canvas zoom uses 40–180% bounds and keeps the viewport center fixed with −/+; clicking the percentage resets to 100%. Ctrl/⌘ + wheel or trackpad pinch zooms around the pointer, while regular wheel/trackpad scrolling pans the canvas. Sidebar and controls remain their original size. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
 - Share copies a URL, not local data. Unavailable sidebar pages, notifications, invitations, and the Pro entry are disabled. The compact sidebar includes a working Deals entry for returning from Workflows. AI controls explain their demo boundaries.
 
 ## Verification
@@ -64,3 +64,5 @@ The latest table reference (`639:73154`) supplies the status icons used in group
 ## Updated outer corners
 
 The latest POST 1–4 source uses 0 px outer app corners. The October 6 follow-up overrides the original square main surfaces with 16 px rounded corners on List, Kanban, and Workflow; the record-peek background (`639:101585`) and drawer (`639:102276`) retain 16 px. The sidebar uses 12 px, pipeline columns 24 px, deal cards 12 px, and workflow nodes 14 px. The standalone dashboard `658:39011` still has an 18 px outer frame; it is a separate, unavailable screen and does not override the POST app frames.
+
+The October 6 icon update normalizes outline SVG strokes to 1.1 px while preserving Figma paths, colors, root dimensions, and solid brand/company artwork.

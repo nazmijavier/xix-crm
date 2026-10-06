@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import {
+  MIN_ZOOM,
+  MAX_ZOOM,
+  zoomCanvas,
   canvasViewport,
   centerCanvas,
   minimapProjection,
@@ -224,6 +227,45 @@ export default function Workflow({
         bounds.top * scale,
     });
   };
+  const changeZoom = (target: number) => {
+    const next = zoomCanvas(pos, zoom, target, {
+      x: canvasSize.width / 2,
+      y: canvasSize.height / 2,
+    });
+    setZoom(next.zoom);
+    setPos(next.pos);
+  };
+  useEffect(() => {
+    const element = canvas.current;
+    if (!element) return;
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (event.ctrlKey || event.metaKey) {
+        const rect = element.getBoundingClientRect();
+        const next = zoomCanvas(
+          pos,
+          zoom,
+          zoom * Math.exp(-event.deltaY * 0.01),
+          { x: event.clientX - rect.left, y: event.clientY - rect.top },
+        );
+        setZoom(next.zoom);
+        setPos(next.pos);
+      } else {
+        const unit =
+          event.deltaMode === 1
+            ? 16
+            : event.deltaMode === 2
+              ? element.clientHeight
+              : 1;
+        setPos((p) => ({
+          x: p.x - (event.shiftKey ? event.deltaY : event.deltaX) * unit,
+          y: p.y - (event.shiftKey ? 0 : event.deltaY) * unit,
+        }));
+      }
+    };
+    element.addEventListener("wheel", onWheel, { passive: false });
+    return () => element.removeEventListener("wheel", onWheel);
+  }, [pos, zoom]);
   const active = nodes.find((n) => n.id === selected)!;
   const run = () => {
     setRan(true);
@@ -294,6 +336,10 @@ export default function Workflow({
       <div
         className="workflow-canvas"
         ref={canvas}
+        style={{
+          backgroundSize: `${28 * zoom}px ${28 * zoom}px`,
+          backgroundPosition: `${pos.x}px ${pos.y - 48}px`,
+        }}
         aria-label="Workflow canvas. Drag cards to move them; drag the background to pan."
         onPointerDown={(e) => {
           if (
@@ -681,14 +727,25 @@ export default function Workflow({
           </button>
           <button
             aria-label="Zoom out"
-            onClick={() => setZoom(Math.max(0.4, zoom - 0.1))}
+            title="Zoom out"
+            disabled={zoom <= MIN_ZOOM}
+            onClick={() => changeZoom(zoom - 0.1)}
           >
             −
           </button>
-          <span>{Math.round(zoom * 100)}%</span>
+          <button
+            className="zoom-percentage"
+            aria-label={`Zoom ${Math.round(zoom * 100)}%. Reset to 100%`}
+            title="Reset zoom to 100% · Ctrl/⌘ + scroll to zoom"
+            onClick={() => changeZoom(1)}
+          >
+            {Math.round(zoom * 100)}%
+          </button>
           <button
             aria-label="Zoom in"
-            onClick={() => setZoom(Math.min(1.8, zoom + 0.1))}
+            title="Zoom in"
+            disabled={zoom >= MAX_ZOOM}
+            onClick={() => changeZoom(zoom + 0.1)}
           >
             +
           </button>

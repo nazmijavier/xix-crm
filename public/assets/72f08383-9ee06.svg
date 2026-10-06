@@ -1,8 +1,8 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Meya / Outline / bar-chart">
-<path id="Vector" d="M3.95521 7.86554V6.06362C3.95521 5.8335 3.76866 5.64696 3.53854 5.64696H2.28231C2.05219 5.64696 1.86564 5.8335 1.86564 6.06362V7.86554" stroke="white" stroke-width="0.541667" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M6.04475 7.86617V4.30787C6.04475 4.07774 5.85821 3.8912 5.62808 3.8912H4.37183C4.14173 3.8912 3.95518 4.07774 3.95518 4.30787V7.86617" stroke="white" stroke-width="0.541667" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M8.13429 7.86554V2.55086C8.13429 2.32075 7.94775 2.1342 7.71762 2.1342H6.46137C6.23125 2.1342 6.04471 2.32075 6.04471 2.55086V7.86554" stroke="white" stroke-width="0.541667" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_4" d="M1.35427 7.86542H8.64571" stroke="white" stroke-width="0.541667" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M3.95521 7.86554V6.06362C3.95521 5.8335 3.76866 5.64696 3.53854 5.64696H2.28231C2.05219 5.64696 1.86564 5.8335 1.86564 6.06362V7.86554" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.04475 7.86617V4.30787C6.04475 4.07774 5.85821 3.8912 5.62808 3.8912H4.37183C4.14173 3.8912 3.95518 4.07774 3.95518 4.30787V7.86617" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M8.13429 7.86554V2.55086C8.13429 2.32075 7.94775 2.1342 7.71762 2.1342H6.46137C6.23125 2.1342 6.04471 2.32075 6.04471 2.55086V7.86554" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M1.35427 7.86542H8.64571" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

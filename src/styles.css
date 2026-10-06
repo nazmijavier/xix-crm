@@ -847,7 +847,7 @@ kbd {
   display: block;
   width: 12px;
   height: 12px;
-  border: 1px solid currentColor;
+  border: 1.1px solid currentColor;
   border-radius: 50%;
   position: relative;
 }
@@ -1465,9 +1465,6 @@ kbd {
 .workflow {
   display: block;
   background-color: #27282a;
-  background-image: radial-gradient(#ffffff26 0.8px, transparent 1px);
-  background-size: 28px 28px;
-  background-position: 0 10px;
 }
 .workflow-header {
   position: absolute;
@@ -1521,6 +1518,7 @@ kbd {
   background: white;
 }
 .workflow-canvas {
+  background-image: radial-gradient(#ffffff26 0.8px, transparent 1px);
   position: absolute;
   inset: 48px 0 30px;
   overflow: hidden;
@@ -1788,7 +1786,8 @@ kbd {
   border-radius: 7px;
   font-size: 16px;
 }
-.zoom-controls span {
+.zoom-controls .zoom-percentage {
+  width: auto;
   flex: 1;
   text-align: center;
   font-size: 11px;

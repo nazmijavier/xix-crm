@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  zoomCanvas,
+  MIN_ZOOM,
+  MAX_ZOOM,
   canvasViewport,
   centerCanvas,
   minimapProjection,
@@ -104,4 +107,26 @@ test("minimap keeps moved cards within its padded bounds and allows round-trip c
     assert.ok(Math.abs((x - map.x) / map.scale - n.x) < 1e-8);
     assert.ok(Math.abs((y - map.y) / map.scale - n.y) < 1e-8);
   }
+});
+
+test("zoom keeps the canvas point under the anchor fixed and clamps only canvas scale", () => {
+  const original = { x: -200, y: 90 };
+  const anchor = { x: 600, y: 300 };
+  for (const target of [0.1, 0.8, 1, 1.5, 3]) {
+    const next = zoomCanvas(original, 0.75, target, anchor);
+    assert.ok(next.zoom >= MIN_ZOOM && next.zoom <= MAX_ZOOM);
+    assert.ok(
+      Math.abs(
+        (anchor.x - next.pos.x) / next.zoom - (anchor.x - original.x) / 0.75,
+      ) < 1e-8,
+    );
+    assert.ok(
+      Math.abs(
+        (anchor.y + 48 - next.pos.y) / next.zoom -
+          (anchor.y + 48 - original.y) / 0.75,
+      ) < 1e-8,
+    );
+  }
+  assert.equal(zoomCanvas(original, 1, 0, anchor).zoom, MIN_ZOOM);
+  assert.equal(zoomCanvas(original, 1, 10, anchor).zoom, MAX_ZOOM);
 });

@@ -101,3 +101,22 @@ export function minimapProjection(nodes: WorkflowNode[]) {
     y: (78 - (bottom - top) * scale) / 2 - top * scale,
   };
 }
+
+export const MIN_ZOOM = 0.4;
+export const MAX_ZOOM = 1.8;
+
+export function zoomCanvas(
+  pos: Point,
+  currentZoom: number,
+  targetZoom: number,
+  anchor: Point,
+) {
+  const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, targetZoom));
+  return {
+    zoom,
+    pos: {
+      x: anchor.x - ((anchor.x - pos.x) / currentZoom) * zoom,
+      y: anchor.y + 48 - ((anchor.y + 48 - pos.y) / currentZoom) * zoom,
+    },
+  };
+}

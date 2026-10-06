@@ -1,8 +1,8 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Frame">
-<path id="Vector" d="M5.83333 8.75L4.08333 10.5L2.33333 8.75" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M4.08333 3.5V10.5" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M8.16667 10.6943C8.16667 10.9095 8.3405 11.0833 8.55575 11.0833H10.1109C10.2141 11.0833 10.3131 11.0423 10.386 10.9694C10.459 10.8964 10.5 10.7974 10.5 10.6943V9.13908C10.5 9.03589 10.459 8.93693 10.386 8.86396C10.3131 8.79099 10.2141 8.75 10.1109 8.75H8.55575C8.45256 8.75 8.35359 8.79099 8.28063 8.86396C8.20766 8.93693 8.16667 9.03589 8.16667 9.13908V10.6943Z" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_4" d="M8.16675 6.31958C8.16675 6.69583 8.47125 7.00033 8.8475 7.00033H11.5693C11.9456 7.00033 12.2501 6.69583 12.2501 6.31958V3.59774C12.2501 3.22149 11.9456 2.91699 11.5693 2.91699H8.8475C8.47125 2.91699 8.16675 3.22149 8.16675 3.59774V6.31958Z" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M5.83333 8.75L4.08333 10.5L2.33333 8.75" stroke-width="1.1" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M4.08333 3.5V10.5" stroke-width="1.1" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M8.16667 10.6943C8.16667 10.9095 8.3405 11.0833 8.55575 11.0833H10.1109C10.2141 11.0833 10.3131 11.0423 10.386 10.9694C10.459 10.8964 10.5 10.7974 10.5 10.6943V9.13908C10.5 9.03589 10.459 8.93693 10.386 8.86396C10.3131 8.79099 10.2141 8.75 10.1109 8.75H8.55575C8.45256 8.75 8.35359 8.79099 8.28063 8.86396C8.20766 8.93693 8.16667 9.03589 8.16667 9.13908V10.6943Z" stroke-width="1.1" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M8.16675 6.31958C8.16675 6.69583 8.47125 7.00033 8.8475 7.00033H11.5693C11.9456 7.00033 12.2501 6.69583 12.2501 6.31958V3.59774C12.2501 3.22149 11.9456 2.91699 11.5693 2.91699H8.8475C8.47125 2.91699 8.16675 3.22149 8.16675 3.59774V6.31958Z" stroke-width="1.1" stroke="#8A8A8A" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>
