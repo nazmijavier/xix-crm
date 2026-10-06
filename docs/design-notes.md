@@ -15,7 +15,7 @@ The main surface starts at x=240, y=4 and measures 1196 × 947 on desktop. The w
 
 Board columns are 266.4 px wide with 8 px gaps, 24 px corner radii, and 12 px internal padding. Cards have 12 px radii and 184 px height. Discovery and Closing use the source's 12 px card gap; the other columns use 8 px. The list has a 48 px header, 40 px toolbar, 34 px column heading, 30 px group headings, and 44 px rows.
 
-Original SVG/PNG assets are local. Workflow connector SVGs retain their exported geometry and placement. The logo's original video paint cannot be exported through the Figma API; the expanded sidebar uses the matching Meya brand poster, while the compact sidebar uses the exact Xix SVG export.
+Original SVG/PNG assets are local. Workflow cards start at the Figma coordinates; SVG Bézier connectors attach to the current card edges as cards move. The logo's original video paint cannot be exported through the Figma API; the expanded sidebar uses the matching Meya brand poster, while the compact sidebar uses the exact Xix SVG export.
 
 Figma's GLASS effect has no equivalent native CSS implementation. The web version approximates it using the original translucent fill, backdrop blur, and a restrained inset edge highlight. Refraction and font rasterization can differ between Figma and browsers; absolute pixel equality is not claimed.
 
@@ -44,7 +44,7 @@ The two requested skills, **better-ui** and **emil-design-eng**, informed radius
 - Search matches deal, company, industry, or owner. Owner/stage filters combine; sort applies within groups.
 - Selection supports bulk move/delete. Delete requires confirmation. A recent mutation can be undone from the notification.
 - JSON import validates records and merges by unique ID. CSV export escapes fields and guards formula prefixes.
-- Workflow nodes can be selected and renamed; background drag pans, controls zoom and reset the view. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
+- Workflow nodes can be selected, renamed, and dragged freely at any zoom. Arrow keys move a focused card by 10 px (Shift: 1 px). Positions persist in this browser; connectors, selection tools, and minimap follow the cards. Background drag pans; fit-to-screen includes the current card positions. Run simulates the sample $267k deal locally. Publish toggles a local demo state.
 - Share copies a URL, not local data. Unavailable sidebar pages, notifications, invitations, and the Pro entry are disabled. The compact sidebar includes a working Deals entry for returning from Workflows. AI controls explain their demo boundaries.
 
 ## Verification
@@ -63,4 +63,4 @@ The latest table reference (`639:73154`) supplies the status icons used in group
 
 ## Updated outer corners
 
-The latest POST 1–4 source uses 0 px outer app corners. List (`639:74113`), Kanban (`639:72173`), and Workflow (`639:76025`) main surfaces use 0 px; the record-peek background (`639:101585`) and drawer (`639:102276`) retain 16 px. The sidebar uses 12 px, pipeline columns 24 px, deal cards 12 px, and workflow nodes 14 px. The standalone dashboard `658:39011` still has an 18 px outer frame; it is a separate, unavailable screen and does not override the POST app frames.
+The latest POST 1–4 source uses 0 px outer app corners. The October 6 follow-up overrides the original square main surfaces with 16 px rounded corners on List, Kanban, and Workflow; the record-peek background (`639:101585`) and drawer (`639:102276`) retain 16 px. The sidebar uses 12 px, pipeline columns 24 px, deal cards 12 px, and workflow nodes 14 px. The standalone dashboard `658:39011` still has an 18 px outer frame; it is a separate, unavailable screen and does not override the POST app frames.

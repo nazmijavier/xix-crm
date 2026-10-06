@@ -1,4 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import {
+  connections,
+  connectionPath,
+  dragPosition,
+  restorePositions,
+  nodeHeight,
+} from "../workflowGeometry";
 import { Icon, asset, Badge, Modal } from "./UI";
 const F = (name: string) => asset("639-76174", name);
 type NodeData = {
@@ -11,7 +18,7 @@ type NodeData = {
   icon: string;
   width?: number;
 };
-const nodes: NodeData[] = [
+const initialNodes: NodeData[] = [
   {
     id: "trigger",
     x: 20,
@@ -104,17 +111,6 @@ const nodes: NodeData[] = [
     icon: "imgFrame8",
   },
 ];
-const edges: [number, number, number, number, string, string][] = [
-  [240, 287.5, 78, 64, "-4.17% -3.42%", "imgContainerContainer"],
-  [339, 399.5, 89, 84, "-3.17% -3%", "imgContainerContainer1"],
-  [448, 578, 264, 112.5, "-2.37% -1.01%", "imgContainerContainer2"],
-  [448, 578, 264, 0.5, "-533.33% -1.01%", "imgContainerContainer3"],
-  [448, 466.5, 264, 111.5, "-2.39% -1.01%", "imgContainerContainer4"],
-  [448, 354.5, 264, 223.5, "-1.19% -1.01%", "imgContainerContainer5"],
-  [448, 241.5, 264, 336.5, "-.79% -1.01%", "imgContainerContainer6"],
-  [932, 240.5, 70.5, 226, "-1.18% -3.78%", "imgContainerContainer7"],
-  [1222.5, 466.5, 52, 0, "-2.67px -5.13%", "imgContainerContainer8"],
-];
 export default function Workflow({
   onShare,
   onNotice,
@@ -122,6 +118,29 @@ export default function Workflow({
   onShare: () => void;
   onNotice: (s: string) => void;
 }) {
+  const [nodes, setNodes] = useState(() => {
+    try {
+      return restorePositions(
+        initialNodes,
+        localStorage.getItem("xix.workflow.positions"),
+      );
+    } catch {
+      return initialNodes;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "xix.workflow.positions",
+        JSON.stringify(
+          Object.fromEntries(nodes.map(({ id, x, y }) => [id, { x, y }])),
+        ),
+      );
+    } catch {
+      /* Moving cards still works when browser storage is unavailable. */
+    }
+  }, [nodes]);
+  const canvas = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [selected, setSelected] = useState("enterprise");
@@ -141,9 +160,46 @@ export default function Workflow({
   });
   const [edit, setEdit] = useState("");
   const [showMap, setShowMap] = useState(true);
-  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(
-    null,
+  const drag = useRef<{
+    pointerId: number;
+    x: number;
+    y: number;
+    px: number;
+    py: number;
+    nodeId?: string;
+    zoom: number;
+    moved: boolean;
+  } | null>(null);
+  const [draggingNode, setDraggingNode] = useState<string | null>(null);
+  const bounds = {
+    left: Math.min(...nodes.map((n) => n.x)),
+    top: Math.min(...nodes.map((n) => n.y)),
+    right: Math.max(...nodes.map((n) => n.x + (n.width || 220))),
+    bottom: Math.max(...nodes.map((n) => n.y + nodeHeight(n))),
+  };
+  const mapScale = Math.min(
+    154 / (bounds.right - bounds.left),
+    64 / (bounds.bottom - bounds.top),
   );
+  const fitToView = () => {
+    if (!canvas.current) return;
+    const { clientWidth: width, clientHeight: height } = canvas.current;
+    const scale = Math.min(
+      1,
+      (width - 80) / (bounds.right - bounds.left),
+      (height - 100) / (bounds.bottom - bounds.top),
+    );
+    setZoom(scale);
+    setPos({
+      x:
+        (width - (bounds.right - bounds.left) * scale) / 2 -
+        bounds.left * scale,
+      y:
+        48 +
+        (height - (bounds.bottom - bounds.top) * scale) / 2 -
+        bounds.top * scale,
+    });
+  };
   const active = nodes.find((n) => n.id === selected)!;
   const run = () => {
     setRan(true);
@@ -213,24 +269,63 @@ export default function Workflow({
       </header>
       <div
         className="workflow-canvas"
-        aria-label="Workflow canvas. Drag the background to pan."
+        ref={canvas}
+        aria-label="Workflow canvas. Drag cards to move them; drag the background to pan."
         onPointerDown={(e) => {
-          if ((e.target as HTMLElement).closest("button")) return;
+          if (
+            e.button !== 0 ||
+            drag.current ||
+            (e.target as HTMLElement).closest("button")
+          )
+            return;
           e.currentTarget.setPointerCapture(e.pointerId);
-          drag.current = { x: e.clientX, y: e.clientY, px: pos.x, py: pos.y };
+          drag.current = {
+            pointerId: e.pointerId,
+            x: e.clientX,
+            y: e.clientY,
+            px: pos.x,
+            py: pos.y,
+            zoom: 1,
+            moved: false,
+          };
         }}
         onPointerMove={(e) => {
-          if (drag.current)
-            setPos({
-              x: drag.current.px + e.clientX - drag.current.x,
-              y: drag.current.py + e.clientY - drag.current.y,
-            });
+          const current = drag.current;
+          if (!current || current.pointerId !== e.pointerId) return;
+          if (
+            !current.moved &&
+            Math.hypot(e.clientX - current.x, e.clientY - current.y) < 3
+          )
+            return;
+          current.moved = true;
+          const next = dragPosition(
+            { x: current.px, y: current.py },
+            { x: current.x, y: current.y },
+            { x: e.clientX, y: e.clientY },
+            current.zoom,
+          );
+          if (current.nodeId) {
+            setDraggingNode(current.nodeId);
+            setNodes((items) =>
+              items.map((n) =>
+                n.id === current.nodeId ? { ...n, ...next } : n,
+              ),
+            );
+          } else setPos(next);
         }}
-        onPointerUp={() => {
+        onPointerUp={(e) => {
+          if (drag.current?.pointerId !== e.pointerId) return;
           drag.current = null;
+          setDraggingNode(null);
         }}
-        onPointerCancel={() => {
+        onPointerCancel={(e) => {
+          if (drag.current?.pointerId !== e.pointerId) return;
           drag.current = null;
+          setDraggingNode(null);
+        }}
+        onLostPointerCapture={() => {
+          drag.current = null;
+          setDraggingNode(null);
         }}
       >
         <div
@@ -239,22 +334,68 @@ export default function Workflow({
             transform: `translate(${pos.x}px,${pos.y}px) scale(${zoom})`,
           }}
         >
-          {edges.map(([x, y, w, h, inset, img]) => (
-            <div
-              className="workflow-edge"
-              key={img}
-              style={{ left: x, top: y, width: w, height: h }}
-            >
-              <div style={{ position: "absolute", inset }}>
-                <img src={F(img)} alt="" />
-              </div>
-            </div>
-          ))}
+          <svg className="workflow-edges" aria-hidden="true">
+            {connections.map(({ from, to, vertical }) => (
+              <path
+                key={`${from}-${to}`}
+                data-connection={`${from}-${to}`}
+                d={connectionPath(
+                  nodes.find((n) => n.id === from)!,
+                  nodes.find((n) => n.id === to)!,
+                  vertical,
+                )}
+              />
+            ))}
+          </svg>
           {nodes.map((n) => (
             <button
               key={n.id}
-              className={"workflow-node " + (selected === n.id ? "active" : "")}
+              className={
+                "workflow-node " +
+                (selected === n.id ? "active " : "") +
+                (draggingNode === n.id ? "dragging" : "")
+              }
+              data-node-id={n.id}
               style={{ left: n.x, top: n.y, width: n.width || 220 }}
+              onPointerDown={(e) => {
+                if (e.button !== 0 || drag.current) return;
+                e.stopPropagation();
+                e.currentTarget.setPointerCapture(e.pointerId);
+                setSelected(n.id);
+                drag.current = {
+                  pointerId: e.pointerId,
+                  x: e.clientX,
+                  y: e.clientY,
+                  px: n.x,
+                  py: n.y,
+                  nodeId: n.id,
+                  zoom,
+                  moved: false,
+                };
+              }}
+              onKeyDown={(e) => {
+                const direction = {
+                  ArrowLeft: [-1, 0],
+                  ArrowRight: [1, 0],
+                  ArrowUp: [0, -1],
+                  ArrowDown: [0, 1],
+                }[e.key];
+                if (!direction) return;
+                e.preventDefault();
+                const step = e.shiftKey ? 1 : 10;
+                setSelected(n.id);
+                setNodes((items) =>
+                  items.map((item) =>
+                    item.id === n.id
+                      ? {
+                          ...item,
+                          x: item.x + direction[0] * step,
+                          y: item.y + direction[1] * step,
+                        }
+                      : item,
+                  ),
+                );
+              }}
               onClick={() => {
                 setSelected(n.id);
               }}
@@ -262,7 +403,7 @@ export default function Workflow({
                 setConfig(n);
                 setEdit(labels[n.id] || n.title);
               }}
-              aria-label={`${n.type}: ${labels[n.id] || n.title}. Double click to configure.`}
+              aria-label={`${n.type}: ${labels[n.id] || n.title}. Drag or use arrow keys to move. Double click to configure.`}
             >
               <span className="node-heading">
                 <span className="node-icon">
@@ -326,7 +467,7 @@ export default function Workflow({
             <>
               <button
                 className="node-port"
-                style={{ left: 702, top: 230.5 }}
+                style={{ left: active.x - 10, top: active.y + 38 }}
                 aria-label="Enterprise input connection"
                 onClick={() => setModal("View connections")}
               >
@@ -334,7 +475,10 @@ export default function Workflow({
               </button>
               <button
                 className="node-port"
-                style={{ left: 922, top: 230.5 }}
+                style={{
+                  left: active.x + (active.width || 220) - 10,
+                  top: active.y + 38,
+                }}
                 aria-label="Enterprise output connection"
                 onClick={() => setModal("View connections")}
               >
@@ -393,19 +537,16 @@ export default function Workflow({
           <button
             className="minimap"
             aria-label="Fit workflow to view"
-            onClick={() => {
-              setZoom(0.85);
-              setPos({ x: 0, y: 0 });
-            }}
+            onClick={fitToView}
           >
             {nodes.map((n) => (
               <span
                 key={n.id}
                 style={{
-                  left: n.x / 10 + 8,
-                  top: n.y / 10 - 12,
-                  width: (n.width || 220) / 12,
-                  height: n.id === "branch" ? 20 : 9,
+                  left: (n.x - bounds.left) * mapScale + 8,
+                  top: (n.y - bounds.top) * mapScale + 8,
+                  width: (n.width || 220) * mapScale,
+                  height: nodeHeight(n) * mapScale,
                   background: n.id === selected ? "#8c95ff" : undefined,
                 }}
               />
@@ -433,13 +574,7 @@ export default function Workflow({
           >
             +
           </button>
-          <button
-            aria-label="Fit to screen"
-            onClick={() => {
-              setZoom(0.85);
-              setPos({ x: 0, y: 0 });
-            }}
-          >
+          <button aria-label="Fit to screen" onClick={fitToView}>
             <Icon src={asset("639-76065", "imgIcon3")} />
           </button>
         </div>
