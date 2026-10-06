@@ -287,7 +287,7 @@ export default function App() {
                   className="button export-button"
                   onClick={() => setPanel("Export or import")}
                 >
-                  <Icon src={H("imgFrame2")} />
+                  <Icon src="/assets/export-upload.svg" />
                   Export or Import
                 </button>
                 <button className="button" onClick={share}>

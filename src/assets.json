@@ -72,12 +72,12 @@
     "imgFrame3": "/assets/72f08383-8183f.svg",
     "imgFrame4": "/assets/72f08383-6fc95.svg",
     "imgFrame5": "/assets/72f08383-58c14.svg",
-    "imgMeyaOutlineBarChart": "/assets/72f08383-9ee06.svg",
-    "imgMeyaOutlineCalendar": "/assets/72f08383-3b0fb.svg",
-    "imgMeyaOutlineEmail": "/assets/72f08383-a32d4.svg",
     "imgUserPlus": "/assets/72f08383-05ac4.svg",
     "imgMeyaOutlineSettings": "/assets/72f08383-ac58e.svg",
-    "imgFrame6": "/assets/72f08383-3661f.svg"
+    "imgFrame6": "/assets/72f08383-3661f.svg",
+    "imgBarChart": "/assets/shortcut-forecast-fill.svg",
+    "imgCalendar": "/assets/shortcut-calendar-fill.svg",
+    "imgMail1": "/assets/shortcut-sequences-fill.svg"
   },
   "639-74116": {
     "imgFrame2147236491": "/assets/e550e291-0183a.svg",

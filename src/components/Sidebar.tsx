@@ -16,9 +16,9 @@ const crm = [
 ];
 const shortcuts = [
   ["Northwind Traders", "imgFrame5", "", "#ff7a59"],
-  ["Forecast", "imgMeyaOutlineBarChart", "", "#3a70db"],
-  ["Calendar", "imgMeyaOutlineCalendar", "", "#35c283"],
-  ["Sequences", "imgMeyaOutlineEmail", "", "#866de5"],
+  ["Forecast", "imgBarChart", "", "#3a70db"],
+  ["Calendar", "imgCalendar", "", "#35c283"],
+  ["Sequences", "imgMail1", "", "#866de5"],
 ];
 export default function Sidebar({
   collapsed,
@@ -63,10 +63,14 @@ export default function Sidebar({
         }
       >
         <span
-          className={color ? "nav-color" : ""}
+          className={color ? "nav-color" : "nav-icon-slot"}
           style={{ background: color }}
         >
-          <Icon src={A(icon)} size={color ? 10 : 14} />
+          <Icon
+            src={A(icon)}
+            size={color ? 10 : icon === "imgMail" ? 11.6676 : 14}
+            height={icon === "imgMail" ? 10.5 : undefined}
+          />
         </span>
         {!collapsed && (
           <>
@@ -120,7 +124,7 @@ export default function Sidebar({
               aria-disabled="true"
               aria-label="Notifications"
             >
-              <Icon src={A("imgBell")} />
+              <Icon src={A("imgBell")} size={12} />
             </button>
           </div>
         )}
@@ -132,7 +136,7 @@ export default function Sidebar({
               aria-disabled="true"
               aria-label="Notifications"
             >
-              <Icon src={A("imgBell")} />
+              <Icon src={A("imgBell")} size={12} />
             </button>
           )}
           {collapsed && nav(crm.slice(0, 1))}

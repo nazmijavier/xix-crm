@@ -5,12 +5,20 @@ import { stageColors } from "../model";
 import type { Deal, Stage } from "../model";
 export const asset = (node: string, name: string) =>
   (assets as Record<string, Record<string, string>>)[node]?.[name];
-export function Icon({ src, size = 14 }: { src: string; size?: number }) {
+export function Icon({
+  src,
+  size = 14,
+  height = size,
+}: {
+  src: string;
+  size?: number;
+  height?: number;
+}) {
   return (
     <img
       src={src}
       width={size}
-      height={size}
+      height={height}
       alt=""
       aria-hidden="true"
       draggable="false"

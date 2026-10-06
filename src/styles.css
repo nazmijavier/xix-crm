@@ -159,12 +159,12 @@ input[type="checkbox"]:checked:after {
   display: flex;
   flex-direction: column;
   background: var(--surface);
-  border-radius: 16px;
+  border-radius: 0 16px 16px 0;
   overflow: hidden;
   position: relative;
 }
 .record-is-open .main-surface {
-  border-radius: 16px;
+  border-radius: 0 16px 16px 0;
 }
 .sidebar {
   border-radius: 12px;
@@ -2148,4 +2148,13 @@ body {
 .sidebar button[aria-disabled="true"] {
   opacity: 1;
   cursor: default;
+}
+
+.nav-icon-slot {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -66,3 +66,5 @@ The latest table reference (`639:73154`) supplies the status icons used in group
 The latest POST 1–4 source uses 0 px outer app corners. The October 6 follow-up overrides the original square main surfaces with 16 px rounded corners on List, Kanban, and Workflow; the record-peek background (`639:101585`) and drawer (`639:102276`) retain 16 px. The sidebar uses 12 px, pipeline columns 24 px, deal cards 12 px, and workflow nodes 14 px. The standalone dashboard `658:39011` still has an 18 px outer frame; it is a separate, unavailable screen and does not override the POST app frames.
 
 The October 6 icon update normalizes outline SVG strokes to 1.1 px while preserving Figma paths, colors, root dimensions, and solid brand/company artwork.
+
+The later October 6 annotation sets the main surface left corners to 0 px; right corners and the record drawer stay 16 px. Forecast, Calendar, and Sequences now use the filled Figma exports from sidebar 639:101584. Export/Import uses the Meya upload glyph instead of the filter shown in the source. Sidebar outline strokes are 1.1 px with non-scaling stroke; the Email glyph retains its natural aspect ratio inside a 14 px slot.
